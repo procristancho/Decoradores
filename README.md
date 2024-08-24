@@ -58,5 +58,50 @@ Something after the function to be decorated
    Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo 'LICENSE' para más detalles.
 
 
+# Código del archivo obsoleto.py
+Este repositorio contiene un ejemplo de cómo crear y utilizar un decorador en Python para marcar una función como obsoleta. 
+```
+import warnings
+from functools import wraps
 
+def obsoleto(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        warnings.warn(f"La función {func.__name__} está obsoleta y será removida en el futuro", 
+                      category=DeprecationWarning, stacklevel=2)
+        return func(*args, **kwargs)
+    return wrapper
 
+@obsoleto
+def vieja_funcion():
+    print("Esta es una función obsoleta destinada a ser removida")
+
+vieja_funcion()
+
+```
+
+## Contenido
+- **obsoleto(func) :** Un decorador que emite una advertencia de obsolescencia.
+- **@wraps(func):** Este es otro decorador que preserva la información original de la función decorada (como su nombre y docstring), lo cual es útil para mantener la documentación y otras propiedades de la función intactas.
+- **warnings.warn:** Esta función genera una advertencia. En este caso, se utiliza DeprecationWarning para indicar que la función está obsoleta.
+- **stacklevel=2:** Esto ajusta la advertencia para que apunte a la línea donde se llamó a la función obsoleta, en lugar de dentro del decorador, lo que facilita a los desarrolladores identificar dónde se está utilizando la función.
+- **vieja_funcion():** Una función marcada como obsoleta utilizando el decorador obsoleto.
+
+## Salida Esperada
+Cuando se ejecuta el código anterior, se obtendrá la siguiente salida:
+```
+<path_to_file>: La función vieja_funcion está obsoleta y será removida en el futuro
+Esta es una función obsoleta destinada a ser removida
+```
+## Requisitos
+- Python 3.x
+
+## Ejecución
+```
+git clone https://github.com/procristancho/Decoradores.git
+cd Decoradores
+python obsoleto.py
+
+```
+## Licencia
+Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles.
